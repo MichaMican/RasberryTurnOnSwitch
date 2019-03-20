@@ -10,6 +10,7 @@ CORS(app)
 
 @app.route("/write", methods=['POST'])
 def write_data():
+    print("It kind of works - but it doesn't")
     data = request.get_json()
     f = open("status.json","w+")
     f.write(json.dumps(data))

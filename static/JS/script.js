@@ -1,4 +1,4 @@
-var url = "127.0.0.1/write"
+var url = "http://127.0.0.1/write"
 //3
 function toggleComputer(status){
     var obj = '{"status":'+ status + '}';
