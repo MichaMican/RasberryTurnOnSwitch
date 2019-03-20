@@ -15,6 +15,7 @@ def write_data():
     data = request.get_json()
     with open(statusJSONFile, 'w') as f:
         f.write(json.dumps(data))
+    analyse(data)
     return "OK"
 
 @app.route("/read")
