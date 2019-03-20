@@ -33,6 +33,8 @@ def index():
 #Phils Stuff
 def analyse(data):
     foo = 1
+#   if(data.status = aus):
+#       print("NotAus")
     if(data.status):
         print("anschatlen")
     else:
