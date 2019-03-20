@@ -32,8 +32,8 @@ def index():
 
 #Phils Stuff
 def analyse(data):
-    foo = 1
-    if(data.status):
+    print(data)
+    if(data["status"]):
         print("anschatlen")
     else:
         print("ausschalten")
