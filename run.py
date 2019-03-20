@@ -13,7 +13,6 @@ def write_data():
     data = request.get_json()
     analyse(data)
     return "OK", 200
-<
 
 @app.route("/")
 def index():
