@@ -8,20 +8,21 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+statusJSONFile = "./IO/status.json"
+
 @app.route("/write", methods=['POST'])
 def write_data():
     data = request.get_json()
-    f = open("status.json","w+")
-    f.write(json.dumps(data))
-    f.close()
-    #analyse(data)
-    return "OK", 200
+    with open(statusJSONFile, 'w') as f:
+        f.write(json.dumps(data))
+    analyse(data)
+    return "OK"
 
 @app.route("/read")
 def read_data():
-    f = open("status.json","r")
-    data = f.read()
-    f.close()
+    data = ''
+    with open(statusJSONFile, 'r') as f:
+        data = f.read()
     return data
 
 @app.route("/")
