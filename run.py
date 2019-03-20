@@ -4,6 +4,7 @@ import json
 import time
 import datetime
 import os
+#import RPi.GPIO as GPIO
 
 app = Flask(__name__)
 CORS(app)
@@ -31,6 +32,12 @@ def index():
 #Phils Stuff
 def analyse(data):
     foo = 1
+    if(data.status):
+        print("anschatlen")
+    else:
+        print("ausschalten")
+
+
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=80, debug=True)
+    app.run(host='127.0.0.1', port=80, debug=True)   
