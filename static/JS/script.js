@@ -1,5 +1,5 @@
-var urlToWrite = "http://127.0.0.1/write";
-var urlToRead = "http://127.0.0.1/read";
+var urlToWrite = "http://192.168.0.44:5321/write";
+var urlToRead = "http://192.168.0.44:5321/read";
 //3
 function toggleComputer(status){
 

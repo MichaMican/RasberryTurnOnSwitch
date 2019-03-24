@@ -8,9 +8,7 @@ import RPi.GPIO as GPIO
 
 
 #setup GPIO using Board numbering + Pin setup
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(15, GPIO.IN)
-GPIO.setup(16, GPIO.OUT)
+#GPIO.setup(15, GPIO.IN)
 app = Flask(__name__)
 CORS(app)
 
@@ -40,13 +38,17 @@ def index():
 
 #turning on/off the Server with help of internet
 def analyse(data):
-    if(data.status):
+    if(data["status"]):
         print("anschalten")
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(16, GPIO.OUT)
         GPIO.output(16, GPIO.HIGH)
         time.sleep(1)
         GPIO.output(16, GPIO.LOW)
     else:
         print("ausschalten")
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(16, GPIO.OUT)
         GPIO.output(16, GPIO.HIGH)
         time.sleep(1)
         GPIO.output(16, GPIO.LOW)
@@ -56,4 +58,4 @@ def analyse(data):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=80, debug=True)   
+    app.run(host='192.168.0.44', port=5321, debug=True)   
