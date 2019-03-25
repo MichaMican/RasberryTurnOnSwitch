@@ -23,6 +23,10 @@ def write_data():
     analyse(data)
     return "OK"
 
+@app.route("/notAus", methods=['POST'])
+def notAus():
+    foo = data
+
 @app.route("/read")
 def read_data():
     data = ''
@@ -30,6 +34,7 @@ def read_data():
         data = f.read()
     return data
 
+ 
 @app.route("/")
 def index():
     return render_template('index.html')
