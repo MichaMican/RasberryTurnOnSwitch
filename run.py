@@ -12,24 +12,30 @@ CORS(app)
 @app.route("/write", methods=['POST'])
 def write_data():
     data = request.get_json()
-    f = open("status.json","w+")
-    f.write(json.dumps(data))
-    f.close()
-    #analyse(data)
-    return "OK", 200
+    with open(statusJSONFile, 'w') as f:
+        f.write(json.dumps(data))
+    analyse(data)
+    return "OK"
+
+@app.route("/notAus", methods=['POST'])
+def notAus():
+    foo = data
+    
+
 @app.route("/read")
 def read_data():
     f = open("status.json","r")
     data = f.read()
     f.close()
     return data
+  
 @app.route("/")
 def index():
     return render_template('index.html')
 #Phils Stuff
 def analyse(data):
-    foo = 1
-    if(data.status):
+    print(data)
+    if(data["status"]):
         print("anschatlen")
     else:
         print("ausschalten")
