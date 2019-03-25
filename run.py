@@ -9,8 +9,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-statusJSONFile = "./IO/status.json"
-
 @app.route("/write", methods=['POST'])
 def write_data():
     data = request.get_json()
@@ -26,15 +24,14 @@ def notAus():
 
 @app.route("/read")
 def read_data():
-    data = ''
-    with open(statusJSONFile, 'r') as f:
-        data = f.read()
+    f = open("status.json","r")
+    data = f.read()
+    f.close()
     return data
-
+  
 @app.route("/")
 def index():
     return render_template('index.html')
-
 #Phils Stuff
 def analyse(data):
     print(data)
@@ -46,4 +43,4 @@ def analyse(data):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=80, debug=True)   
+    app.run(host='127.0.0.1', port=80, debug=True)
