@@ -17,8 +17,8 @@ def check_status():
     GPIO.setup(15, GPIO.IN)
     while True:
         if GPIO.INPUT == 1:
-                print("server an")
-                LastStatus = '{"Status":true}'
+            print("server an")
+            LastStatus = '{"Status":true}'
         else:
-                print("server aus")
-                LastStatus = '{"Status":false}'
+            print("server aus")
+            LastStatus = '{"Status":false}'
