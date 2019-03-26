@@ -25,7 +25,7 @@ def write_data():
 
 @app.route("/notAus", methods=['POST'])
 def notAus():
-    foo = data
+    data = request.json()
 
 @app.route("/read")
 def read_data():
