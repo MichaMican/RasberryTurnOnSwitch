@@ -6,19 +6,28 @@ import datetime
 import os
 import RPi.GPIO as GPIO
 
-
-LastStatus = ''
-statusJSONFile = "./IO/currentstatus.json"
+LastStatus = False
+statusJSONFile = "./IO/currentStatus.json"
 
 #check if server is turned on or off
 def check_status():
-    global LastStatus
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(15, GPIO.IN)
     while True:
+
+        status = {}
+
+        print(GPIO.INPUT)
+
         if GPIO.INPUT == 1:
             print("server an")
-            LastStatus = '{"Status":true}'
+            status["status"] = True
         else:
             print("server aus")
-            LastStatus = '{"Status":false}'
+            status["status"] = False
+        
+        if status["status"] != LastStatus:
+            LastStatus = status["status"]
+            with open(statusJSONFile, 'w') as f:
+                f.write(json.dumps(status))
+    
