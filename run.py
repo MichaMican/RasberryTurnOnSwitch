@@ -7,8 +7,6 @@ import os
 import RPi.GPIO as GPIO
 
 
-#setup GPIO using Board numbering + Pin setup
-#GPIO.setup(15, GPIO.IN)
 app = Flask(__name__)
 CORS(app)
 
