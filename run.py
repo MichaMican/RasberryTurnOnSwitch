@@ -25,7 +25,7 @@ def write_data():
 
 @app.route("/notAus", methods=['POST'])
 def notAus():
-    foo = data
+    data = request.json()
 
 @app.route("/read")
 def read_data():
@@ -63,4 +63,4 @@ def analyse(data):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.44', port=5321, debug=True)   
+    app.run(host='192.168.0.44', port=61234, debug=True)   
