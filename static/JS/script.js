@@ -1,5 +1,5 @@
-var urlToWrite = "http://192.168.0.44:5321/write";
-var urlToRead = "http://192.168.0.44:5321/read";
+var urlToWrite = "http://computer.daota.de:61234/write";
+var urlToRead = "http://computer.daota.de:61234/read";
 //3
 function toggleComputer(status){
 
