@@ -47,6 +47,7 @@ def analyse(data):
     global currentStatusJSONFile
 
     currentStatus = ''
+    
     with open(currentStatusJSONFile, 'r') as f:
         currentStatus = f.read()
 
