@@ -37,6 +37,29 @@ def read_data():
  
 @app.route("/")
 def index():
+
+    global currentStatusJSONFile
+    global statusJSONFile
+
+    currentStatusJSON = ''
+    statusJSON = ''
+    #Sync status with currentStatus
+    with open(currentStatusJSONFile, 'r') as f:
+        currentStatusJSON = f.read()
+
+    with open(statusJSONFile, 'r') as f:
+        statusJSON = f.read()
+
+    convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
+    timeDifferece = (datetime.datetime.now() - convertedDateTime).total_seconds
+    print("Seconds since last state change")
+
+    if currentStatusJSON["status"] != statusJSON["status"] and timeDifferece > 5:
+        statusJSON["status"] = currentStatusJSON["status"]
+        with open(statusJSONFile, 'w') as f:
+            f.write(json.dumps(statusJSON))
+
+
     return render_template('index.html')
 
 #Phils Stuff
