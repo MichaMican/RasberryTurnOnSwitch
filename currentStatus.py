@@ -21,11 +21,11 @@ def checkStatus():
         print(GPIO.input(15))
 
         if GPIO.input(15) == 1:
-            print("server an")
-            status["status"] = True
-        else:
             print("server aus")
             status["status"] = False
+        else:
+            print("server an")
+            status["status"] = True
             
         print(status["status"])
         
