@@ -31,9 +31,11 @@ def checkStatus():
         
         if status["status"] != lastStatus:
             print("UPDATED!")
+            status["lastChanged"] = datetime.datetime.now()
             lastStatus = status["status"]
             with open(statusJSONFile, 'w') as f:
                 f.write(json.dumps(status))
+                
         time.sleep(1)
     
 if __name__ == '__main__':
