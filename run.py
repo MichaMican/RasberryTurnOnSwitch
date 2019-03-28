@@ -11,7 +11,9 @@ app = Flask(__name__)
 CORS(app)
 
 
+currentStatusJSONFile = "./IO/currentStatus.json"
 statusJSONFile = "./IO/status.json"
+
 
 @app.route("/write", methods=['POST'])
 def write_data():
@@ -23,7 +25,7 @@ def write_data():
 
 @app.route("/notAus", methods=['POST'])
 def notAus():
-    foo = data
+    data = request.json()
 
 @app.route("/read")
 def read_data():
@@ -41,24 +43,34 @@ def index():
 
 #turning on/off the Server with help of internet
 def analyse(data):
-    if(data["status"]):
-        print("anschalten")
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(16, GPIO.OUT)
-        GPIO.output(16, GPIO.HIGH)
-        time.sleep(1)
-        GPIO.output(16, GPIO.LOW)
+
+    global currentStatusJSONFile
+
+    currentStatus = ''
+    with open(currentStatusJSONFile, 'r') as f:
+        currentStatus = f.read()
+
+    if (data["status"] != currentStatus["status"]):
+        if(data["status"]):
+            print("anschalten")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(16, GPIO.OUT)
+            GPIO.output(16, GPIO.HIGH)
+            time.sleep(1)
+            GPIO.output(16, GPIO.LOW)
+        else:
+            print("ausschalten")
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(16, GPIO.OUT)
+            GPIO.output(16, GPIO.HIGH)
+            time.sleep(1)
+            GPIO.output(16, GPIO.LOW)
     else:
-        print("ausschalten")
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(16, GPIO.OUT)
-        GPIO.output(16, GPIO.HIGH)
-        time.sleep(1)
-        GPIO.output(16, GPIO.LOW)
+        print("The PC is already in this State!")
 
     #is needed to reset the status of any GPIO pins when you exit the programm
     GPIO.cleanup()
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.44', port=5321, debug=True)   
+    app.run(host='192.168.0.44', port=61234, debug=True)   
