@@ -55,7 +55,8 @@ def index():
 
     convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
     timeDifferece = (datetime.datetime.now() - convertedDateTime).total_seconds
-    print("Seconds since last state change")
+    
+    print("Seconds since last state change: " + timeDifferece)
 
     if currentStatusJSON["status"] != statusJSON["status"] and timeDifferece > 5:
         statusJSON["status"] = currentStatusJSON["status"]
