@@ -7,4 +7,4 @@ These two Scripts (run.py and currentStatus.py) create a website to turn a compu
   
 ## How to setup:
 Connection:  
-![circuit diagram](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![circuit diagram](https://i.imgur.com/lRkw57g.png)
