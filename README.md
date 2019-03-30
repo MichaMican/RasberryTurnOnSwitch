@@ -6,5 +6,5 @@ These two Scripts (run.py and currentStatus.py) create a website to turn a compu
 **currentStatus.py** checks the actual status of the computer (via the on/off LED of the computer (GPIO 15)) and syncs it if necessary with the website.
   
 ## How to setup:
-Connection:  
+### Connection:  
 ![circuit diagram](https://i.imgur.com/lRkw57g.png)
