@@ -53,6 +53,8 @@ def index():
     with open(statusJSONFile, 'r') as f:
         statusJSON = f.read()
 
+    print(currentStatusJSON["lastChanged"])
+
     convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
     timeDifferece = (datetime.datetime.now() - convertedDateTime).total_seconds
     
