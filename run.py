@@ -74,12 +74,14 @@ def analyse(data):
 
     global currentStatusJSONFile
 
-    currentStatus = ''
+    currentStatusString = ''
     
     with open(currentStatusJSONFile, 'r') as f:
-        currentStatus = f.read()
+        currentStatusString = f.read()
 
-    if (data["status"] != currentStatus["status"]):
+    currentStatusJSON = json.loads(currentStatusString)
+
+    if (data["status"] != currentStatusJSON["status"]):
         if(data["status"]):
             print("anschalten")
             GPIO.output(16, GPIO.HIGH)
