@@ -60,10 +60,7 @@ def index():
 
     convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
     print(type(convertedDateTime))
-    convertedDateTime = datetime.datetime.now()
-    print(datetime.datetime.now() - convertedDateTime)
     timeDifference = (datetime.datetime.now() - convertedDateTime).total_seconds()
-    #foo = timeDifference + 1
     
     print("Seconds since last state change: " + str(timeDifference))
 
