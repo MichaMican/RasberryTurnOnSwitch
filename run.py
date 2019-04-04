@@ -10,11 +10,14 @@ import RPi.GPIO as GPIO
 app = Flask(__name__)
 CORS(app)
 
-
 currentStatusJSONFile = "./IO/currentStatus.json"
 statusJSONFile = "./IO/status.json"
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(16, GPIO.OUT)
 
+
+#Webserver Stuff
 @app.route("/write", methods=['POST'])
 def write_data():
     data = request.get_json()
@@ -34,66 +37,64 @@ def read_data():
         data = f.read()
     return data
 
- 
 @app.route("/")
 def index():
 
     global currentStatusJSONFile
     global statusJSONFile
 
-    currentStatusJSON = ''
-    statusJSON = ''
+    currentStatusString = ''
+    statusString = ''
+
     #Sync status with currentStatus
     with open(currentStatusJSONFile, 'r') as f:
-        currentStatusJSON = f.read()
+        currentStatusString = f.read()
 
     with open(statusJSONFile, 'r') as f:
-        statusJSON = f.read()
+        statusString = f.read()
+
+    currentStatusJSON = json.loads(currentStatusString)
+    statusJSON = json.loads(statusString)
 
     convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
-    timeDifferece = (datetime.datetime.now() - convertedDateTime).total_seconds
-    print("Seconds since last state change")
+    timeDifference = (datetime.datetime.now() - convertedDateTime).total_seconds()
+    
+    print("Seconds since last state change: " + str(timeDifference))
 
-    if currentStatusJSON["status"] != statusJSON["status"] and timeDifferece > 5:
+    if currentStatusJSON["status"] != statusJSON["status"] and timeDifference > 5:
         statusJSON["status"] = currentStatusJSON["status"]
         with open(statusJSONFile, 'w') as f:
             f.write(json.dumps(statusJSON))
 
-
     return render_template('index.html')
 
-#Phils Stuff
 
-#turning on/off the Server with help of internet
+#Turning px on/off
 def analyse(data):
 
     global currentStatusJSONFile
 
-    currentStatus = ''
+    currentStatusString = ''
     
     with open(currentStatusJSONFile, 'r') as f:
-        currentStatus = f.read()
+        currentStatusString = f.read()
 
-    if (data["status"] != currentStatus["status"]):
+    currentStatusJSON = json.loads(currentStatusString)
+
+    if (data["status"] != currentStatusJSON["status"]):
         if(data["status"]):
             print("anschalten")
-            GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(16, GPIO.OUT)
             GPIO.output(16, GPIO.HIGH)
             time.sleep(1)
             GPIO.output(16, GPIO.LOW)
         else:
             print("ausschalten")
-            GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(16, GPIO.OUT)
             GPIO.output(16, GPIO.HIGH)
             time.sleep(1)
             GPIO.output(16, GPIO.LOW)
     else:
         print("The PC is already in this State!")
 
-    #is needed to reset the status of any GPIO pins when you exit the programm
-    GPIO.cleanup()
 
 
 if __name__ == '__main__':
