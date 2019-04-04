@@ -54,6 +54,7 @@ def index():
     with open(statusJSONFile, 'r') as f:
         statusJSON = f.read()
 
+    print(currentStatusJSON["status"])
     print(currentStatusJSON["lastChanged"])
 
     #convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
