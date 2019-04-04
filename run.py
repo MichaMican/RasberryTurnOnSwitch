@@ -44,24 +44,23 @@ def index():
     global statusJSONFile
 
     currentStatusString = ''
-    statusJSON = ''
+    statusString = ''
 
     #Sync status with currentStatus
     with open(currentStatusJSONFile, 'r') as f:
         currentStatusString = f.read()
 
     with open(statusJSONFile, 'r') as f:
-        statusJSON = f.read()
+        statusString = f.read()
 
     currentStatusJSON = json.loads(currentStatusString)
+    statusJSON = json.loads(statusString)
 
     print(currentStatusJSON["status"])
     print(currentStatusJSON["lastChanged"])
 
-    #convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
-    #timeDifference = (datetime.datetime.now() - convertedDateTime).total_seconds
-
-    timeDifference = 10
+    convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
+    timeDifference = (datetime.datetime.now() - convertedDateTime).total_seconds
     
     print("Seconds since last state change: " + timeDifference)
 
