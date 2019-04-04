@@ -55,12 +55,14 @@ def index():
 
     print(currentStatusJSON["lastChanged"])
 
-    convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
-    timeDifferece = (datetime.datetime.now() - convertedDateTime).total_seconds
-    
-    print("Seconds since last state change: " + timeDifferece)
+    #convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
+    #timeDifference = (datetime.datetime.now() - convertedDateTime).total_seconds
 
-    if currentStatusJSON["status"] != statusJSON["status"] and timeDifferece > 5:
+    timeDifference = 10
+    
+    print("Seconds since last state change: " + timeDifference)
+
+    if currentStatusJSON["status"] != statusJSON["status"] and timeDifference > 5:
         statusJSON["status"] = currentStatusJSON["status"]
         with open(statusJSONFile, 'w') as f:
             f.write(json.dumps(statusJSON))
