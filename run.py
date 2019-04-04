@@ -49,6 +49,7 @@ def index():
     #Sync status with currentStatus
     with open(currentStatusJSONFile, 'r') as f:
         currentStatusJSON = f.read()
+        print("I got here")
 
     with open(statusJSONFile, 'r') as f:
         statusJSON = f.read()
