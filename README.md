@@ -8,3 +8,10 @@ These two Scripts (run.py and currentStatus.py) create a website to turn a compu
 ## How to setup:
 ### Connection:  
 ![circuit diagram](https://i.imgur.com/lRkw57g.png)
+
+### Installation:
+On Raspbian:
+Open Terminal and run:  
+``pip3 install flask``  
+``pip3 install flask_cors``  
+
