@@ -8,8 +8,9 @@ These two Scripts (run.py and currentStatus.py) create a website to turn a compu
 ## How to setup:
 
 ### Installation:
-On Raspbian:
+_This Guide is based on Raspbian_  
 Open Terminal and run:  
+``git clone https://github.com/MichaMican/RaspberryTurnOnSwitch.git && checkout raspberry``
 ``pip3 install flask``  
 ``pip3 install flask_cors``  
 
