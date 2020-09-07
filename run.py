@@ -6,12 +6,8 @@ import datetime
 import os
 import RPi.GPIO as GPIO
 
-
 app = Flask(__name__)
 CORS(app)
-
-currentStatusJSONFile = "./IO/currentStatus.json"
-statusJSONFile = "./IO/status.json"
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
@@ -21,67 +17,40 @@ GPIO.setup(16, GPIO.OUT)
 @app.route("/write", methods=['POST'])
 def write_data():
     data = request.get_json()
-    with open(statusJSONFile, 'w') as f:
-        f.write(json.dumps(data))
     analyse(data)
     return "OK"
 
-@app.route("/notAus", methods=['POST'])
-def notAus():
-    data = request.json()
+@app.route("/status")
+def checkStatus():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(15, GPIO.IN)
 
-@app.route("/read")
-def read_data():
-    data = ''
-    with open(statusJSONFile, 'r') as f:
-        data = f.read()
-    return data
+    status = {}
+
+    print(GPIO.input(15))
+
+    if GPIO.input(15) == 1:
+        print("server aus")
+        status["status"] = False
+    else:
+        print("server an")
+        status["status"] = True
+        
+    print(status["status"])
+
+    return status
+    
 
 @app.route("/")
 def index():
-
-    global currentStatusJSONFile
-    global statusJSONFile
-
-    currentStatusString = ''
-    statusString = ''
-
-    #Sync status with currentStatus
-    with open(currentStatusJSONFile, 'r') as f:
-        currentStatusString = f.read()
-
-    with open(statusJSONFile, 'r') as f:
-        statusString = f.read()
-
-    currentStatusJSON = json.loads(currentStatusString)
-    statusJSON = json.loads(statusString)
-
-    convertedDateTime = datetime.datetime.strptime(currentStatusJSON["lastChanged"], '%Y-%m-%d %H:%M:%S.%f')
-    timeDifference = (datetime.datetime.now() - convertedDateTime).total_seconds()
-    
-    print("Seconds since last state change: " + str(timeDifference))
-
-    if currentStatusJSON["status"] != statusJSON["status"] and timeDifference > 5:
-        statusJSON["status"] = currentStatusJSON["status"]
-        with open(statusJSONFile, 'w') as f:
-            f.write(json.dumps(statusJSON))
-
     return render_template('index.html')
 
 
-#Turning px on/off
+#Turning pc on/off
 def analyse(data):
+    currentStatus= checkStatus()
 
-    global currentStatusJSONFile
-
-    currentStatusString = ''
-    
-    with open(currentStatusJSONFile, 'r') as f:
-        currentStatusString = f.read()
-
-    currentStatusJSON = json.loads(currentStatusString)
-
-    if (data["status"] != currentStatusJSON["status"]):
+    if (data["status"] != currentStatus["status"]):
         if(data["status"]):
             print("anschalten")
             GPIO.output(16, GPIO.HIGH)
@@ -98,4 +67,4 @@ def analyse(data):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.44', port=61234, debug=True)   
+    app.run(host='127.0.0.1', port=61234, debug=True)   

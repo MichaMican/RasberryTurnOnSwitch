@@ -1,6 +1,7 @@
-var urlToWrite = "http://computer.daota.de:61234/write";
-var urlToRead = "http://computer.daota.de:61234/read";
-//3
+var baseURL = "localhost:65136"
+
+var urlToWrite = ```${baseURL}/write```;
+var urlToRead = ```${baseURL}/status```;
 function toggleComputer(status){
 
     var json={
@@ -16,10 +17,9 @@ function toggleComputer(status){
     });
 }
 
-
 window.onload = function() {
-    //TODO: Read current state from JSON file and set switch according to that state
     $.getJSON(urlToRead, function(data){
         document.getElementById("switch1").checked = data.status;
+        document.getElementById("switch1").visibility = "visible";
     });
   };
