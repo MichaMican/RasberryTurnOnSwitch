@@ -13,7 +13,7 @@ There is no secure authentication implemented! This should only be used in a clo
 ### Installation:
 _This Guide is based on Raspbian_  
 Open Terminal and run:  
-``git clone https://github.com/MichaMican/RaspberryTurnOnSwitch.git && checkout raspberry``  
+``git clone https://github.com/MichaMican/RaspberryTurnOnSwitch.git``  
 ``pip3 install flask``   
 ``pip3 install flask_cors``  
 
