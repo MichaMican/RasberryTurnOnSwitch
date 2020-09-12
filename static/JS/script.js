@@ -1,7 +1,7 @@
-var baseURL = "localhost:65136"
+var baseURL = "192.168.178.47:61772"
 
-var urlToWrite = ```${baseURL}/write```;
-var urlToRead = ```${baseURL}/status```;
+var urlToWrite = `/write`;
+var urlToRead = `/status`;
 function toggleComputer(status){
 
     var json={
@@ -19,7 +19,7 @@ function toggleComputer(status){
 
 window.onload = function() {
     $.getJSON(urlToRead, function(data){
-        document.getElementById("switch1").checked = data.status;
-        document.getElementById("switch1").visibility = "visible";
+        document.getElementById("switchInput").checked = data.status;
+        document.getElementById("switchLabel").style.visibility = "visible";
     });
   };

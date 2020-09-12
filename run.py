@@ -4,13 +4,25 @@ import json
 import time
 import datetime
 import os
+import time
 import RPi.GPIO as GPIO
 
 app = Flask(__name__)
 CORS(app)
 
+print("Reseting GPIOs")
+GPIO.cleanup()
+
 GPIO.setmode(GPIO.BOARD)
+
+print("Setting up Pins")
+
+time.sleep(3)
+
 GPIO.setup(16, GPIO.OUT)
+GPIO.setup(15, GPIO.IN)
+
+print("Finished Pin setup")
 
 
 #Webserver Stuff
@@ -22,9 +34,6 @@ def write_data():
 
 @app.route("/status")
 def checkStatus():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(15, GPIO.IN)
-
     status = {}
 
     print(GPIO.input(15))
@@ -67,4 +76,4 @@ def analyse(data):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=61234, debug=True)   
+    app.run(host='192.168.178.47', port=61772, debug=True)
